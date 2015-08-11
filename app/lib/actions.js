@@ -1,7 +1,6 @@
-'use strict';
-
 var EventDispatcher = createjs.EventDispatcher
-    , EaselEvent = createjs.Event;
+    , EaselEvent = createjs.Event
+    , stage;
 
 var controls = {
     37: 'moveleft',
@@ -14,17 +13,19 @@ var controls = {
 var currentActions = {};
 
 
-var actionService = module.exports = {
+var actionService = {
     init: actions_init,
     get: actions_get
-}
+};
 
 
-function actions_init(win) {
+function actions_init(win, current_stage) {
+    stage = current_stage;
     EventDispatcher.initialize(actionService);
 
     win.addEventListener('keydown', onKeyDown);
     win.addEventListener('keyup', onKeyUp);
+    win.addEventListener('mousemove', onmousemove);
 }
 
 
@@ -32,11 +33,25 @@ function actions_get() {
     return currentActions;
 }
 
+function onmousemove(event) {
+    var canvasEl = stage.canvas;
+    var canvasXPos = canvasEl.offsetLeft;
+    var canvasYPos = canvasEl.offsetTop;
+
+    currentActions.mouse = {
+        winx : event.clientX,
+        winY : event.clientY,
+        stageX : event.clientX - canvasXPos,
+        stageY : event.clientY - canvasYPos,
+        target : event.target
+    };
+}
 
 function onKeyDown(event) {
     var keyEvent = processEvent(event, 'down');
-    if (keyEvent)
+    if (keyEvent) {
         currentActions[keyEvent.type] = keyEvent.data;
+    }
 }
 
 function onKeyUp(event) {
@@ -78,3 +93,5 @@ function prepareEvent(event, phase, type) {
     keyEvent.nativeEvent = event;
     return keyEvent;
 }
+
+module.exports = actionService;

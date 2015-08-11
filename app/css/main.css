@@ -5,8 +5,7 @@ body {
 }
 
 #main {
-    margin: 0;
-    background-color: #FFFFFF;
+    background: url('../img/blue.png') repeat 0 0;
     width: 500px;
     height: 500px;
     position: absolute;

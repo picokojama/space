@@ -13,7 +13,8 @@ module.exports = function(grunt) {
         copy: {
             scripts: {
                 src: [
-                    'bower_components/easeljs/lib/easeljs-0.7.1.combined.js',
+                    'bower_components/easeljs/lib/easeljs-0.8.1.combined.js',
+                    'bower_components/jquery/dist/jquery.js'
                 ],
                 dest: 'build/scripts/',
                 expand: true,
@@ -29,7 +30,7 @@ module.exports = function(grunt) {
             },
             css: {
                 src: [
-                    'app/css/main.css',
+                    'app/css/main.css'
                 ],
                 dest: 'build/css/',
                 expand: true,
@@ -45,7 +46,7 @@ module.exports = function(grunt) {
         connect: {
             server: {
                 options: {
-                    port: 9001,
+                    port: 80,
                     base: 'build'
                 }
             }
